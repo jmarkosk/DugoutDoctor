@@ -18,7 +18,7 @@ SYSTEM_MODE(MANUAL);
 
 //Constant Strings
 const char csProjectName[] = "Dugout Doctor";
-const char csVersion[] = "V00.00.01";
+const char csVersion[] = "V0.0.01";
 
 
 //LED Indicators
@@ -31,7 +31,7 @@ u_int8_t gHB_LED_STATE = 0;
 elapsedMillis timeElapsed;
 
 //Temp / Humidity
-#define DHTPIN D9     // what pin we're connected to
+#define DHTPIN D2     // what pin we're connected to
 
 // Uncomment whatever type you're using!
 //#define DHTTYPE DHT11		// DHT 11 
@@ -91,37 +91,46 @@ void loop() {
 void GetDHT(void)
 {
    // Wait a few seconds between measurements.
-//	delay(2000);
+	delay(2000);
 
 // Reading temperature or humidity takes about 250 milliseconds!
 // Sensor readings may also be up to 2 seconds 'old' (its a 
 // very slow sensor)
-	float h = dht.getHumidity();
+	//float h = dht.getHumidity();
 // Read temperature as Celsius
 	float t = dht.getTempCelcius();
 // Read temperature as Farenheit
-	float f = dht.getTempFarenheit();
+	//float f = dht.getTempFarenheit();
   
 // Check if any reads failed and exit early (to try again).
-	
+	/*
   if (isnan(h) || isnan(t) || isnan(f)) {
 		Serial.println("Failed to read from DHT sensor!");
 		return;
 	}
+*/
+    if (isnan(t)) {
+		Serial.println("Failed to read from DHT sensor!");
+		return;
+	}
+
 
 // Compute heat index
 // Must send in temp in Fahrenheit!
 	float hi = dht.getHeatIndex();
 	float dp = dht.getDewPoint();
 	float k = dht.getTempKelvin();
-
+/*
 	Serial.print("Humid: "); 
 	Serial.print(h);
 	Serial.print("% - ");
+*/
 	Serial.print("Temp: "); 
 	Serial.print(t);
 	Serial.print("*C ");
-	Serial.print(f);
+	
+  /*
+  Serial.print(f);
 	Serial.print("*F ");
 	Serial.print(k);
 	Serial.print("*K - ");
@@ -131,5 +140,6 @@ void GetDHT(void)
 	Serial.print("HeatI: ");
 	Serial.print(hi);
 	Serial.println("*C");
+ */ 
 	Serial.println(Time.timeStr());
 }
